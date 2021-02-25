@@ -5,6 +5,6 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class StateService {
-  isShowLoader = new BehaviorSubject(true);
+  listAPI=[];
 
 }

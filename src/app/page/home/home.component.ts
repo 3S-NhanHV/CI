@@ -1,4 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { HomeService } from 'src/app/core/service/home-service/home-service.service';
+import { HomeService  as HomeService2 } from '../../core/service/home-service2/home-service.service';
+import { LoaderService } from 'src/app/core/service/loader-service/loader.service';
 import { StateService } from '../../core/service/state-service/state-service.service';
 
 @Component({
@@ -8,15 +12,44 @@ import { StateService } from '../../core/service/state-service/state-service.ser
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-  constructor(private stateService: StateService) { }
+  constructor(private stateService: StateService,private homeService2: HomeService2, private homeService: HomeService, private loaderService: LoaderService) { }
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.stateService.isShowLoader.next(false);
-    }, 2000);
   }
 
   ngOnInit(): void {
     this.countDown();
+    // this.homeService.returnData().subscribe((res) => {
+    // });
+
+    this.homeService.actionGetData();
+    // this.homeService.actionGetDataById(1);
+    // setTimeout(() => {
+    //   this.homeService2.actionGetData2();
+      this.homeService2.actionGetDataById2(1);
+    // },2000)
+    // setTimeout (() => {
+    //    this.loaderService.show();
+    //    this.loaderService.show();
+    //    this.loaderService.show();
+    //    this.loaderService.show();
+    //    setTimeout (() => {
+    //     this.loaderService.hide();
+    //    },1000);
+    //    setTimeout (() => {
+    //     this.loaderService.hide();
+    //    },20000);
+    //    setTimeout (() => {
+    //     this.loaderService.hide();
+    //    },30000);
+    //   this.loaderService.hide();
+    // },5000)
+     
+  }
+  showData(){
+    this.loaderService.isShowLoader.next(true)
+  }
+  hiddenData(){
+    this.loaderService.isShowLoader.next(false)
   }
   countDown() {
     const second = 1000,
